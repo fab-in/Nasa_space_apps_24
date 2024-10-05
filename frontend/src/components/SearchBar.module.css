@@ -1,0 +1,17 @@
+.searchBar {
+    position: fixed;
+    width: 100%;
+    bottom: 20px;
+    padding-inline: 400px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.searchBar button {
+    height: 56px;
+}
