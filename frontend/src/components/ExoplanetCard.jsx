@@ -8,17 +8,18 @@ import {
   Image,
 } from "@nextui-org/react";
 
+
 export default function ExoplanetCard({ planet_data }) {
   return (
     <Card className="max-w-[400px]">
       <CardHeader className="flex gap-3">
-        <Image
+        {/* <Image
           alt="exoplanet"
           height={40}
           radius="sm"
           src="https://example.com/exoplanet-image.png" // Replace with actual image URL
           width={40}
-        />
+        /> */}
         <div className="flex flex-col">
           <p className="text-md">{planet_data?.pl_name || "N/A"}</p>{" "}
           {/* Exoplanet Name */}
@@ -33,7 +34,7 @@ export default function ExoplanetCard({ planet_data }) {
           <strong>Dec :</strong> {planet_data?.dec || "N/A"}
         </p>
         <p>
-          <strong>Dec :</strong> {planet_data?. || "N/A"}
+          <strong>Distance :</strong> {planet_data?.distance || "N/A"}
         </p>
         <p>
           <strong>Orbital Period (days):</strong>{" "}
