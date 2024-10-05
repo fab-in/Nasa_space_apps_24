@@ -28,7 +28,7 @@ def get_all_exoplanets_data(request):
 def get_important_exoplanet_data(request, planet_name):
     url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync'
     query = f"""
-    SELECT pl_name, ra, dec, pl_orbper, pl_orbsmax, pl_bmassj, pl_radj
+    SELECT pl_name, ra, dec, pl_orbper, pl_orbsmax, pl_bmassj, pl_radj,sy_dist
     FROM ps
     WHERE pl_name = '{planet_name}'
     """
@@ -50,6 +50,7 @@ def get_important_exoplanet_data(request, planet_name):
                 "Semi-Major Axis (AU)": planet_data.get('pl_orbsmax', 'N/A'),
                 "Mass (Jupiter Masses)": planet_data.get('pl_bmassj', 'N/A'),
                 "Radius (Jupiter Radius)": planet_data.get('pl_radj', 'N/A'),
+                "Distance from Planetary System": planet_data.get('sy_dist', 'N/A'),
             })
         else:
             return JsonResponse({"error": f"No data found for the exoplanet {planet_name}."}, status=404)
