@@ -1,26 +1,41 @@
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {  Autocomplete,  AutocompleteSection,  AutocompleteItem} from "@nextui-org/autocomplete";
+import {
+  Autocomplete,
+  AutocompleteSection,
+  AutocompleteItem,
+} from "@nextui-org/autocomplete";
 import { Button, Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "./SearchBar.module.css"; // Import css modules stylesheet as styles
 
-const SearchBar = ({exoplanets}) => {
+const SearchBar = ({ exoplanets, setSelectedPlanet }) => {
+  const [inputValue, setInputValue] = useState(""); // Local state for input value
+
+  const handleSearch = (e) => {
+    e.preventDefault(); // Prevent default form submission
+    setSelectedPlanet(inputValue); // Call setSelectedPlanet with the input value
+    setInputValue(""); // Clear the input after setting the selected planet
+  };
+
   return (
-    <div className={styles.searchBar}>
-      <Input className="dark" type="text" label="Search for an Exoplanet by name" />
-      <Autocomplete 
-        label="Search for an Exoplanet by name" 
-        className="max-w-xs" 
+    <form className={styles.searchBar} onSubmit={handleSearch}> {/* Wrap in form */}
+      <Input
+        className="dark"
+        type="text"
+        label="Search for an Exoplanet by name"
+        value={inputValue} // Bind input value to state
+        onChange={(e) => setInputValue(e.target.value)} // Update state on input change
+      />
+      <Button
+        className="dark"
+        color="primary"
+        endContent={<SearchIcon />}
+        type="submit" // Set button type to submit
       >
-        {exoplanets?.map((animal) => (
-          <AutocompleteItem key={animal.value} value={animal.value}>
-            {exoplanet.label}
-          </AutocompleteItem>
-        ))}
-      </Autocomplete>
-      <Button className="dark"  color="primary" endContent={<SearchIcon />}></Button>
-    </div>
+        Search
+      </Button>
+    </form>
   );
 };
 

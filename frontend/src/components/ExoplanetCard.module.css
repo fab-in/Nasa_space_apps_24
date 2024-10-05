@@ -1,6 +1,10 @@
 .exoplanetCard {
-  max-width: 400;
+  width: 300px;
   box-shadow: 3;
   border-radius: 2;
   padding: 2;
+
+  position: fixed;
+  top: 10px;
+  left: 10px;
 }
