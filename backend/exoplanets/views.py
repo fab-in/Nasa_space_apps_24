@@ -17,13 +17,14 @@ def get_all_exoplanets_data(request):
     if response.status_code == 200:
         data = response.json()
         if data:
-            exoplanets = [{"Exoplanet": planet_data.get('pl_name', 'N/A')} for planet_data in data]
+            # Create a list of exoplanet names as strings
+            exoplanets = [planet_data.get('pl_name', 'N/A') for planet_data in data]
             return JsonResponse(exoplanets, safe=False)
         else:
             return JsonResponse({"error": "No data found for exoplanets."}, status=404)
     else:
         return JsonResponse({"error": f"Failed to retrieve data. Status code: {response.status_code}"}, status=500)
-
+    
 # New function to get important exoplanet data
 def get_important_exoplanet_data(request, planet_name):
     url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync'
