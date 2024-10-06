@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ExoplanetCard from "../components/ExoplanetCard";
 import { useExoplanetContext } from "../hooks/useExoplanetContext";
+// import backgroundVideo from "../assets/space-video.mp4"; // Import the video file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -50,7 +51,26 @@ const ExoplanetSearch = () => {
   }, [selectedPlanet]); // Watch for changes in selectedPlanet from context
 
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
+    <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
+      {/* Background video */}
+      <video
+        autoPlay
+        muted
+        loop
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1, // Ensures the video is behind the content
+        }}
+      >
+        <source src={backgroundVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       {/* Content */}
       {selectedPlanet && (
         <ExoplanetCard
