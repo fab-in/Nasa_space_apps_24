@@ -54,6 +54,15 @@ export default function ExoplanetCard() {
     navigate(`/skyview?ra=${ra}&dec=${dec}&dist=${dist}`);
   };
 
+  const handleExploreClick2 = () => {
+    // Navigate to /skyview with RA and Dec as query parameters
+    const ra = planetData?.ra || "N/A";
+    const dec = planetData?.dec || "N/A";
+    const dist = planetData?.distance || "N/A";
+    navigate(`/constellation?ra=${ra}&dec=${dec}&dist=${dist}`);
+  };
+
+
   return (
     <Card className={[styles.exoplanetCard, "dark max-w-[400px]"]}>
       <CardHeader className="flex gap-3">
@@ -103,6 +112,10 @@ export default function ExoplanetCard() {
             <Button color="primary" onClick={handleExploreClick}>
               Explore the skies! <Rocket />
             </Button>
+            <Button color="primary" onClick={handleExploreClick2}>
+              Create a Constellation! <Rocket />
+            </Button>
+            
           </CardFooter>
         </>
       )}

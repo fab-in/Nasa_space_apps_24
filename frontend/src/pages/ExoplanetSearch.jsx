@@ -4,7 +4,6 @@ import ExoplanetCard from "../components/ExoplanetCard";
 import { useExoplanetContext } from "../hooks/useExoplanetContext";
 
 // Import video
-import backgroundVideo from "../assets/background.mov";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -54,26 +53,6 @@ const ExoplanetSearch = () => {
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
-      {/* Background Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -1,
-        }}
-      >
-        <source src={backgroundVideo} type="video/mov" />
-        Your browser does not support the video tag.
-      </video>
-
       {/* Content */}
       {selectedPlanet && (
         <ExoplanetCard selectedPlanet={selectedPlanet} planetData={planetData} />
