@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -7,12 +8,43 @@ import {
   Button,
   Spinner,
 } from "@nextui-org/react";
-import styles from "./ExoplanetCard.module.css"; // Import css modules stylesheet as styles
+import { useNavigate } from "react-router-dom";
+import { useExoplanetContext } from "../hooks/useExoplanetContext"; // Import ExoplanetContext hook
 import Rocket from "@mui/icons-material/Rocket";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import styles from "./ExoplanetCard.module.css"; // Import css modules stylesheet as styles
 
-export default function ExoplanetCard({ selectedPlanet, planetData }) {
+const API_URL = import.meta.env.VITE_API_URL; // Define the API URL
+
+export default function ExoplanetCard() {
+  const { selectedPlanet } = useExoplanetContext(); // Get selectedPlanet from context
+  const [planetData, setPlanetData] = useState(null); // State to store fetched planet data
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState(null); // State to handle errors
   const navigate = useNavigate(); // Initialize useNavigate
+
+  // Function to fetch planet data from the backend API
+  const fetchPlanetData = async (planetName) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/exoplanets/${planetName}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch planet data.");
+      }
+      const data = await response.json();
+      setPlanetData(data); // Update state with fetched data
+    } catch (err) {
+      setError(err.message); // Update error state
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
+  };
+
+  // Fetch planet data when selectedPlanet changes
+  useEffect(() => {
+    if (selectedPlanet) {
+      fetchPlanetData(selectedPlanet); // Fetch data for selected planet
+    }
+  }, [selectedPlanet]);
 
   const handleExploreClick = () => {
     // Navigate to /skyview with RA and Dec as query parameters
@@ -31,8 +63,12 @@ export default function ExoplanetCard({ selectedPlanet, planetData }) {
         </div>
       </CardHeader>
       <Divider />
-      {selectedPlanet && !planetData ? (
+
+      {/* Show loading spinner if planet data is being fetched */}
+      {loading ? (
         <Spinner style={{ margin: "10px" }} size="lg" />
+      ) : error ? (
+        <p>Error: {error}</p>
       ) : (
         <>
           <CardBody>
@@ -64,7 +100,7 @@ export default function ExoplanetCard({ selectedPlanet, planetData }) {
           </CardBody>
           <Divider />
           <CardFooter>
-            <Button color="primary" onClick={handleExploreClick}> {/* Attach click handler */}
+            <Button color="primary" onClick={handleExploreClick}>
               Explore the skies! <Rocket />
             </Button>
           </CardFooter>

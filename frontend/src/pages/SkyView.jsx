@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useExoplanetContext } from "../hooks/useExoplanetContext";
 import { useLocation } from "react-router-dom";
 import ExoSky from "../components/ExoSky";
+import ExoplanetCard from "../components/ExoplanetCard";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -61,10 +62,13 @@ function SkyView() {
   }
 
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       {ra !== 0 && dec !== 0 && dist !== 0 && (
         <ExoSky ra={ra} dec={dec} dist={dist} stars={stars} />
       )}
+      <div style={{ maxHeight: "100vh" }}>
+        <ExoplanetCard />
+      </div>
     </div>
   );
 }
