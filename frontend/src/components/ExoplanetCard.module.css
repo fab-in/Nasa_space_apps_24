@@ -1,10 +1,12 @@
 .exoplanetCard {
   width: 300px;
-  box-shadow: 3;
-  border-radius: 2;
-  padding: 2;
-
-  position: fixed;
-  top: 10px;
-  left: 10px;
+  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); Adds shadow for hovering effect */
+  border-radius: 8px; /* Makes the corners rounded */
+  padding: 16px; /* Adds internal padding */
+  z-index: 1000; /* Ensures the card is on top */
+  
+  position: absolute; /* Absolute positioning over the canvas */
+  top: 10px; /* Position from the top */
+  left: 10px; /* Position from the left */
+  background-color: white; /* Optional: Set a background color */
 }

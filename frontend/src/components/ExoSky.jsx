@@ -20,6 +20,7 @@ import {
   GALAXY_THICKNESS,
 } from "../config/galaxyConfig.jsx";
 import { gaussianRandom } from "../utils/utils.jsx";
+import { Button } from "@nextui-org/react";
 
 const ExoSky = ({ ra, dec, dist }) => {
   const canvasRef = useRef(null);
@@ -41,7 +42,7 @@ const ExoSky = ({ ra, dec, dist }) => {
       const canvas = canvasRef.current;
 
       // Event listener for clicks
-      window.addEventListener("click", onClick, false);
+      canvas.addEventListener("click", onClick, false);
 
       // Create scene
       scene = new THREE.Scene();
@@ -102,6 +103,7 @@ const ExoSky = ({ ra, dec, dist }) => {
         if (intersects.length > 0) {
           window.alert("Star clicked!");
           console.log("Star clicked!");
+          console.log(intersects);
         } else {
           console.log("Clicked on empty space.");
         }
@@ -118,7 +120,7 @@ const ExoSky = ({ ra, dec, dist }) => {
         logarithmicDepthBuffer: true,
       });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(window.innerWidth * 0.78, window.innerHeight);
       renderer.outputEncoding = THREE.sRGBEncoding;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 0.5;
@@ -213,12 +215,15 @@ const ExoSky = ({ ra, dec, dist }) => {
     };
   }, [ra, dec, dist]);
 
+
   return (
     <canvas
       ref={canvasRef}
       id="canvas"
-      style={{ width: "100%", height: "100%" }}
-    ></canvas>
+      style={{ width: "80%", height: "100%" }}
+    >
+      {" "}
+    </canvas>
   );
 };
 
