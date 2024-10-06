@@ -62,7 +62,6 @@ function SkyView() {
 
   return (
     <div>
-      <h1>Stars Around Selected Planet: {selectedPlanet}</h1>
       {ra !== 0 && dec !== 0 && dist !== 0 && (
         <ExoSky ra={ra} dec={dec} dist={dist} stars={stars} />
       )}

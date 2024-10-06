@@ -14,7 +14,7 @@ const materials = starTypes.color.map((color) => new THREE.MeshBasicMaterial({
 }));
 
 // Create an array of SphereGeometries for the different star sizes
-const geometries = starTypes.size.map((size) => new THREE.SphereGeometry(size, 8, 8));
+const geometries = starTypes.size.map((size) => new THREE.SphereGeometry(0.1, 8, 8));
 
 // const geometry = new THREE.SphereGeometry(1, 8, 8); // 1 is radius, 8 segments for width and height (low-poly)
 
