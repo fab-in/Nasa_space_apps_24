@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ExoplanetCard from "../components/ExoplanetCard";
 import { useExoplanetContext } from "../hooks/useExoplanetContext";
-// import backgroundVideo from "../assets/space-video.mp4"; // Import the video file
+import backgroundVideo from "../assets/space-video.mp4"; // Import the video file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
