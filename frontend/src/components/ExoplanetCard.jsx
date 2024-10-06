@@ -10,7 +10,8 @@ import {
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { useExoplanetContext } from "../hooks/useExoplanetContext"; // Import ExoplanetContext hook
-import Rocket from "@mui/icons-material/Rocket";
+import Rocket from "@mui/icons-material/Rocket"; // Existing rocket icon
+import ExploreIcon from "@mui/icons-material/Explore"; // New icon for constellation
 import styles from "./ExoplanetCard.module.css"; // Import css modules stylesheet as styles
 
 const API_URL = import.meta.env.VITE_API_URL; // Define the API URL
@@ -52,6 +53,14 @@ export default function ExoplanetCard() {
     const dec = planetData?.dec || "N/A";
     const dist = planetData?.distance || "N/A";
     navigate(`/skyview?ra=${ra}&dec=${dec}&dist=${dist}`);
+  };
+
+  const handleExploreClick2 = () => {
+    // Navigate to /skyview with RA and Dec as query parameters
+    const ra = planetData?.ra || "N/A";
+    const dec = planetData?.dec || "N/A";
+    const dist = planetData?.distance || "N/A";
+    navigate(`/constellation?ra=${ra}&dec=${dec}&dist=${dist}`);
   };
 
   return (
@@ -100,9 +109,17 @@ export default function ExoplanetCard() {
           </CardBody>
           <Divider />
           <CardFooter>
-            <Button color="primary" onClick={handleExploreClick}>
-              Explore the skies! <Rocket />
-            </Button>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {/* First Button */}
+              <Button color="primary" onClick={handleExploreClick}>
+                Explore the skies! <Rocket /> {/* Rocket icon */}
+              </Button>
+
+              {/* Second Button */}
+              <Button color="secondary" onClick={handleExploreClick2}>
+                Create a Constellation! <ExploreIcon /> {/* Replaced icon */}
+              </Button>
+            </div>
           </CardFooter>
         </>
       )}
