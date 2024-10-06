@@ -1,0 +1,19 @@
+# Ignore compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore local databases
+*.db
+*.sqlite3
+
+# Ignore local environment variables
+.env
+
+# Ignore any unnecessary directories
+node_modules/
+.git/
+tests/
+*.md
+*.log
+*.zip

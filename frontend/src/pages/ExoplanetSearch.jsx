@@ -124,7 +124,10 @@ const ExoplanetSearch = () => {
 
       {/* Content */}
       {selectedPlanet && (
-        <ExoplanetCard selectedPlanet={selectedPlanet} planetData={planetData} />
+        <ExoplanetCard
+          selectedPlanet={selectedPlanet}
+          planetData={planetData}
+        />
       )}
       <SearchBar />
     </div>
