@@ -1,25 +1,24 @@
-import React, { useState } from "react"; // Import useState
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {
-  Autocomplete,
-  AutocompleteSection,
-  AutocompleteItem,
-} from "@nextui-org/autocomplete";
+import React, { useState } from "react";
+import { useExoplanetContext } from "../hooks/useExoplanetContext"; // Import the custom context hook
 import { Button, Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "./SearchBar.module.css"; // Import css modules stylesheet as styles
 
-const SearchBar = ({ exoplanets, setSelectedPlanet }) => {
+const SearchBar = () => {
   const [inputValue, setInputValue] = useState(""); // Local state for input value
+  const { dispatch } = useExoplanetContext(); // Access dispatch from context
 
   const handleSearch = (e) => {
     e.preventDefault(); // Prevent default form submission
-    setSelectedPlanet(inputValue); // Call setSelectedPlanet with the input value
-    setInputValue(""); // Clear the input after setting the selected planet
+
+    if (inputValue.trim()) {
+      dispatch({ type: "SET_SELECTED_PLANET", payload: inputValue }); // Dispatch action to set the selected planet
+      setInputValue(""); // Clear the input after setting the selected planet
+    }
   };
 
   return (
-    <form className={styles.searchBar} onSubmit={handleSearch}> {/* Wrap in form */}
+    <form className={styles.searchBar} onSubmit={handleSearch}>
       <Input
         className="dark"
         type="text"
@@ -31,7 +30,7 @@ const SearchBar = ({ exoplanets, setSelectedPlanet }) => {
         className="dark"
         color="primary"
         endContent={<SearchIcon />}
-        type="submit" // Set button type to submit
+        type="submit"
       >
         Search
       </Button>

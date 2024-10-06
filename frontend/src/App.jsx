@@ -2,6 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ExoplanetSearch from "./pages/ExoplanetSearch";
 import SkyView from "./pages/SkyView";
+// import SkyView2 from "./pages/SkyView2";
 
 function App() {
   return (

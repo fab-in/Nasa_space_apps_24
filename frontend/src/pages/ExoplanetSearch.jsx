@@ -6,10 +6,10 @@ import { useExoplanetContext } from "../hooks/useExoplanetContext";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ExoplanetSearch = () => {
-  const { exoplanets, dispatch } = useExoplanetContext();
-  const [selectedPlanet, setSelectedPlanet] = useState();
+  const { exoplanets, selectedPlanet, dispatch } = useExoplanetContext(); // Access selectedPlanet from context
   const [planetData, setPlanetData] = useState(null); // State to store fetched planet data
 
+  // Fetch all exoplanets once
   useEffect(() => {
     const fetchExoplanets = async () => {
       const response = await fetch(`${API_URL}/exoplanets`, {
@@ -30,7 +30,7 @@ const ExoplanetSearch = () => {
   useEffect(() => {
     if (selectedPlanet) {
       const fetchPlanetData = async () => {
-        setPlanetData(null)
+        setPlanetData(null);
         try {
           const response = await fetch(
             `${API_URL}/exoplanets/${selectedPlanet}`
@@ -47,16 +47,13 @@ const ExoplanetSearch = () => {
 
       fetchPlanetData();
     }
-  }, [selectedPlanet]); // Dependency array
+  }, [selectedPlanet]); // Watch for changes in selectedPlanet from context
 
   return (
     <div>
       {selectedPlanet && 
       <ExoplanetCard selectedPlanet={selectedPlanet} planetData={planetData} />}
-      <SearchBar
-        exoplanets={exoplanets}
-        setSelectedPlanet={setSelectedPlanet}
-      />
+      <SearchBar />
     </div>
   );
 };
