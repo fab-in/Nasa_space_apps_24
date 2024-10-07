@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^a90@i$ez9%!)_#zg&*y-nj8yt(_94hwx*=#g!83ncuh6cct0=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://nasa-exosky-backend.vercel.app/','localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

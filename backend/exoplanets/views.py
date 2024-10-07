@@ -1,8 +1,8 @@
 import requests
 from django.http import JsonResponse
 import math
-from astropy.coordinates import EarthLocation, AltAz, get_sun
 import pandas as pd
+from astroquery.gaia import Gaia
 
 # Existing function to get all exoplanets
 def get_all_exoplanets_data(request):
@@ -61,10 +61,6 @@ def get_important_exoplanet_data(request, planet_name):
     else:
         return JsonResponse({"error": f"Failed to retrieve data. Status code: {response.status_code}"}, status=500)
 # views.py
-from django.http import JsonResponse
-from astroquery.gaia import Gaia
-import pandas as pd
-import math
 
 def ra_dec_parallax_to_cartesian(ra_deg, dec_deg, parallax_mas):
     # Convert RA and Dec from degrees to radians
