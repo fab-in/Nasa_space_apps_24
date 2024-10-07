@@ -96,4 +96,3 @@ This project is licensed under the MIT License.
 
 ---
 
-This README provides a guide for running and deploying CelestiMaps. Feel free to update or expand it as needed.
