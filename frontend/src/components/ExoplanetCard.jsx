@@ -64,7 +64,7 @@ export default function ExoplanetCard() {
   };
 
   return (
-    <Card className={[styles.exoplanetCard, "dark max-w-[400px]"]}>
+    <Card className={[styles.exoplanetCard, "dark max-w-[400px]"]} style={{ position: 'relative', zIndex: 1000 }}>
       <CardHeader className="flex gap-3">
         <div className="flex flex-col">
           <p className="text-md">{selectedPlanet}</p>
