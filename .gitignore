@@ -1,0 +1,31 @@
+
+# Django
+*.log
+*.pot
+*.pyc
+*.py[co]
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+venv/
+.env
+.env.*
+# Django static files
+staticfiles/
+
+# Node/Vite
+node_modules/
+dist/
+.env
+*.log
+package-lock.json
+yarn.lock
+
+# MacOS
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/
+*.sublime-workspace
