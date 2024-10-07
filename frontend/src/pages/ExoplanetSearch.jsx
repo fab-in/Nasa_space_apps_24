@@ -3,6 +3,10 @@ import SearchBar from "../components/SearchBar";
 import ExoplanetCard from "../components/ExoplanetCard";
 import { useExoplanetContext } from "../hooks/useExoplanetContext";
 import backgroundVideo from "../assets/video.mp4"; // Import the video file
+import ExoplanetSearchCard from "../components/ExoplanetSearchCard";
+import RocketIcon from "@mui/icons-material/Rocket";
+import { Button } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,6 +15,9 @@ const ExoplanetSearch = () => {
   const [planetData, setPlanetData] = useState(null);
   const videoRef = useRef(null); // Create a reference for the video element
   const [videoLoaded, setVideoLoaded] = useState(false); // Track if the video has been lazy-loaded
+  const [currentPage, setCurrentPage] = useState(1); // Pagination state
+  const planetsPerPage = 12; // Number of planets per page
+  const navigate = useNavigate();
 
   // Fetch all exoplanets once
   useEffect(() => {
@@ -19,6 +26,7 @@ const ExoplanetSearch = () => {
         method: "GET",
       });
       const json = await response.json();
+      console.log(json);
       if (response.ok) {
         dispatch({ type: "SET_EXOPLANETS", payload: json });
       }
@@ -85,6 +93,16 @@ const ExoplanetSearch = () => {
     };
   }, []);
 
+  // Pagination logic
+  const indexOfLastPlanet = currentPage * planetsPerPage;
+  const indexOfFirstPlanet = indexOfLastPlanet - planetsPerPage;
+  const currentPlanets = exoplanets?.slice(
+    indexOfFirstPlanet,
+    indexOfLastPlanet
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div style={{ position: "relative", overflow: "hidden", height: "100vh" }}>
       {/* Background video */}
@@ -130,6 +148,106 @@ const ExoplanetSearch = () => {
         />
       )}
       <SearchBar />
+
+      {currentPlanets && (
+        <>
+          {/* Table of Planets */}
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              display: "flex",
+              justifyContent: "center",
+              zIndex: 10,
+            }}
+          >
+            <table style={{ width: "80%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr>
+                  <th
+                    style={{ padding: "10px", borderBottom: "2px solid gray" }}
+                  >
+                    Planet Name
+                  </th>
+                  <th
+                    style={{ padding: "10px", borderBottom: "2px solid gray" }}
+                  >
+                    View
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentPlanets?.map((planet, index) => (
+                  <tr key={index}>
+                    <td
+                      style={{
+                        padding: "10px",
+                        textAlign: "center",
+                        borderBottom: "1px solid lightgray",
+                      }}
+                    >
+                      {planet.name} {/* Display planet name */}
+                    </td>
+                    <td
+                      style={{
+                        padding: "10px",
+                        textAlign: "center",
+                        borderBottom: "1px solid lightgray",
+                      }}
+                    >
+                      {/* <RocketIcon style={{ fontSize: 30 }} />{" "} */}
+                      {/* Display icon */}
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          const ra = planet?.ra || "N/A";
+                          const dec = planet?.dec || "N/A";
+                          const dist = planet?.dist || "N/A";
+                          navigate(`/skyview?ra=${ra}&dec=${dec}&dist=${dist}`);
+                          dispatch({ type: "SET_SELECTED_PLANET", payload: planet?.name });
+                        }}
+                      >
+                        <RocketIcon /> {/* Rocket icon */}
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination Controls */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
+            {Array.from(
+              { length: Math.ceil(exoplanets?.length / planetsPerPage) },
+              (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => paginate(i + 1)}
+                  style={{
+                    margin: "0 5px",
+                    padding: "5px 10px",
+                    backgroundColor:
+                      currentPage === i + 1 ? "blue" : "lightgray",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {i + 1}
+                </button>
+              )
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

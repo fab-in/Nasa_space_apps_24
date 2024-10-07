@@ -8,7 +8,7 @@ from astroquery.gaia import Gaia
 def get_all_exoplanets_data(request):
     url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync'
     query = """
-    SELECT pl_name
+    SELECT TOP 10 pl_name, ra, dec, sy_dist
     FROM ps
     """
     params = {
@@ -20,7 +20,12 @@ def get_all_exoplanets_data(request):
     if response.status_code == 200:
         data = response.json()
         if data:
-            exoplanets = [{"Exoplanet": planet_data.get('pl_name', 'N/A')} for planet_data in data]
+            exoplanets = [{
+                "name": planet_data.get('pl_name', 'N/A'),
+                "ra": planet_data.get('ra', 'N/A'),
+                "dec": planet_data.get('dec', 'N/A'),
+                "dist": planet_data.get('sy_dist', 'N/A'),
+                } for planet_data in data]
             return JsonResponse(exoplanets, safe=False)
         else:
             return JsonResponse({"error": "No data found for exoplanets."}, status=404)
